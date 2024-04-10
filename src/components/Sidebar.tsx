@@ -173,7 +173,9 @@ export const Sidebar = (props: SidebarProps) => {
                                                     }`}
                                                     to={`/chat/${id}`}
                                                 >
-                                                    {currentSessionTitle}
+                                                    {Array.isArray(currentSessionTitle) 
+                                                        ? currentSessionTitle.map(part => part.text).join(' ') 
+                                                        : currentSessionTitle}
                                                 </Link>
                                                 <input
                                                     defaultValue={
