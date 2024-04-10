@@ -77,14 +77,14 @@ const App = () => {
                 if (!!attachment?.data.length) {
                     const { data, mimeType } = attachment;
                     const base64ImgData = `data:${mimeType};base64,${data}`;
-                    parts += `\n\n<img alt="" src="${base64ImgData}" />`;
+                    parts.push({ text: `\n\n<img alt="" src="${base64ImgData}" />` });
                 }
                 const timeString = new Date(timestamp).toLocaleString();
                 exportData += `## ${
                     role === "user"
                         ? t("App.handleExportSession.role_user")
                         : t("App.handleExportSession.role_model")
-                }@${timeString}\n\n${parts}\n\n`;
+                    }@${timeString}\n\n${parts.map(part => part.text).join('\n')}\n\n`;
             });
             saveMdToHtml(
                 exportData,
