@@ -24,7 +24,10 @@ export const getAiChats = async (
 
         const payload = history.map((item) => {
             const { timestamp, attachment, ...rest } = item;
-            return rest;
+            return {
+                ...rest,
+                parts: [{ role: 'system', content: rest.parts }] // 将 parts 字符串转换为 Part 对象数组
+            };
         });
 
         if (stream) {
