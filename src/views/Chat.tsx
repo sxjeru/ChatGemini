@@ -73,7 +73,7 @@ const Chat = (props: RouterComponentProps) => {
                     ...finalSessions[id].slice(0, index),
                     {
                         role: "model",
-                        parts: refreshPlaceholder,
+                        parts: [{ text: refreshPlaceholder }],
                         timestamp: Date.now(),
                     },
                 ],
@@ -149,7 +149,7 @@ const Chat = (props: RouterComponentProps) => {
                     { ...sessions[id][index], parts: prompt },
                     {
                         role: "model",
-                        parts: refreshPlaceholder,
+                        parts: [{ text: refreshPlaceholder }],
                         timestamp: Date.now(),
                     },
                 ],
@@ -195,7 +195,7 @@ const Chat = (props: RouterComponentProps) => {
         } else {
             document.title = siteTitle;
             setChat([
-                { role: "model", parts: invalidPlaceholder, timestamp: 0 },
+                { role: "model", parts: [{ text: invalidPlaceholder }], timestamp: 0 },
             ]);
         }
         setTimeout(() => scrollToBottom(true), 300);
@@ -242,13 +242,13 @@ const Chat = (props: RouterComponentProps) => {
                         role === SessionRole.Model &&
                         index === chat.length - 1
                     ) {
-                        parts += typingEffect;
+                        parts[0].text += typingEffect;
                     }
                     return (
                         <Session
                             key={index}
                             index={index}
-                            prompt={parts}
+                            prompt={parts[0].text}
                             editState={editState}
                             role={role as SessionRole}
                             onRefresh={handleRefresh}
@@ -269,7 +269,7 @@ const Chat = (props: RouterComponentProps) => {
                                         ? window.location.pathname
                                         : basename
                                 }pyodide`}
-                            >{`${parts}${
+                            >{`${parts[0].text}${
                                 !!data.length ? attachmentPostscriptHtml : ""
                             }`}</Markdown>
                         </Session>
