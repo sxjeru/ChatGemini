@@ -158,7 +158,7 @@ export const Sidebar = (props: SidebarProps) => {
                                         const currentSessionTitle =
                                             !!currentSession?.title?.length
                                                 ? currentSession.title
-                                                : currentSession.parts;
+                                                : currentSession.parts.map(part => part.text).join(' ');
                                         return (
                                             <div
                                                 key={_index}
@@ -173,9 +173,7 @@ export const Sidebar = (props: SidebarProps) => {
                                                     }`}
                                                     to={`/chat/${id}`}
                                                 >
-                                                    {Array.isArray(currentSessionTitle) 
-                                                        ? currentSessionTitle.map(part => part.text).join(' ') 
-                                                        : currentSessionTitle}
+                                                    {currentSessionTitle}
                                                 </Link>
                                                 <input
                                                     defaultValue={
